@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     EditText txt_matr;
@@ -28,6 +30,25 @@ public class MainActivity extends AppCompatActivity {
 
         txt_antw.setMovementMethod(new ScrollingMovementMethod());
 
+            btn_abschicken.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String matr = txt_matr.getText().toString();
+                    String dom = "se2-isys.aau.at";
+                    int port = 53212;
+
+                    try {
+                        Client.sendToServer(matr,txt_antw,dom,port);
+
+                    }
+                    catch (Exception e)
+                    {
+
+                        txt_antw.setText(e.getMessage() + "Error");
+                    }
+                }
+            });
 
 
 
@@ -54,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                             if (a != 0 && b != 0){
                             int gt =teiler(a,b);
                             if (gt > 1) {
-                                s = s + String.valueOf(i) + " und " + String.valueOf(j)
+                                s = s + String.valueOf(i+1) + " und " + String.valueOf(j+1)
                                         + System.getProperty("line.separator");
                             }
                             }
@@ -68,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            //größten gemeinsamen Teiler ermitteln
+
             public int teiler(int a, int b) {
 
                 int x;
@@ -78,11 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 } while (b != 0);
 
                 return a;
-
-
             }
-
-
 
         });
     }
